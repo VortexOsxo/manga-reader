@@ -18,4 +18,4 @@ app.register_blueprint(favorite_bp, url_prefix='/favorites')
 app.register_blueprint(histoy_bp, url_prefix='/histories')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
