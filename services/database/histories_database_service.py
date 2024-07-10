@@ -1,5 +1,6 @@
 from .database_service import DatabaseService
 from datetime import datetime
+from ..mangas_service import MangasService
 
 class HistoriesDatabaseService:
     @staticmethod
@@ -25,8 +26,18 @@ class HistoriesDatabaseService:
     
     @staticmethod
     def get_manga_history(user_id: int) -> list:
-        query = "SELECT DISTINCT manga_id FROM histories WHERE user_id = ? ORDER BY read_date DESC;" 
+        query = "SELECT manga_id, MAX(read_date) AS latest_read_date FROM histories WHERE user_id = ? GROUP BY manga_id ORDER BY latest_read_date DESC;" 
         values = (user_id,)
         with DatabaseService() as db_service:
             rows = db_service.select_query(query, values)
-        return [manga_id for manga_id in rows]
+        return [MangasService.get_manga_info(manga_id[0]) for manga_id in rows]
+    
+    @staticmethod
+    def get_last_page_read(user_id: int, manga_id: str):
+        query = "SELECT DISTINCT chapter_number, page_number FROM histories WHERE user_id = ? AND manga_id = ? ORDER BY read_date DESC LIMIT 1";
+        values = (user_id, manga_id)
+
+        with DatabaseService() as db_service:
+            row = db_service.select_one_query(query, values)
+        bookmark = row if row is not None else (0,0)
+        return { 'chapterNumber': bookmark[0], 'pageNumber': bookmark[1] }
