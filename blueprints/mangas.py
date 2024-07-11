@@ -9,17 +9,17 @@ def get_previews():
 
 @manga_bp.route('/<string:manga_id>', methods=['GET'])
 def get_preview(manga_id: str):
-    return jsonify(MangasService.getPreview(manga_id))
+    return jsonify(MangasService.getPreview(manga_id)), 200
 
 @manga_bp.route('/<string:manga_id>/miniatures', methods=['GET'])
 def get_miniature(manga_id: str):
     path = MangasService.getMiniaturePath(manga_id)
-    return send_file(path, mimetype='image/jpeg')
+    return send_file(path, mimetype='image/jpeg'), 200
 
 @manga_bp.route('/<string:manga_id>/chapters', methods=['GET'])
 def get_chapter(manga_id: str):
-    return jsonify(MangasService.getChapters(manga_id))
+    return jsonify(MangasService.getChapters(manga_id)), 200
 
 @manga_bp.route('<string:manga_id>/<int:chapter>/<int:page>', methods=['GET'])
 def get_page(manga_id: str, chapter: int, page: int):
-    return send_file(MangasService.getPage(manga_id, chapter, page), mimetype='image/jpeg')
+    return send_file(MangasService.getPage(manga_id, chapter, page), mimetype='image/jpeg'), 200
