@@ -1,6 +1,6 @@
 from .database_service import DatabaseService
 from datetime import datetime
-from ..mangas_service import MangasService
+from .mangas_database_service import MangasDatabaseService
 
 class HistoriesDatabaseService:
     @staticmethod
@@ -12,6 +12,7 @@ class HistoriesDatabaseService:
             chapter_number INTEGER NOT NULL,
             page_number INTEGER NOT NULL,
             read_date INTEGER NOT NULL,
+            FOREIGN KEY (manga_id) REFERENCES mangas(id)
             FOREIGN KEY (user_id) REFERENCES users(id)
         );'''
         with DatabaseService() as db_service:
@@ -30,7 +31,7 @@ class HistoriesDatabaseService:
         values = (user_id,)
         with DatabaseService() as db_service:
             rows = db_service.select_query(query, values)
-        return [MangasService.get_manga_info(manga_id[0]) for manga_id in rows]
+        return [MangasDatabaseService.get_manga(manga_id[0]) for manga_id in rows]
     
     @staticmethod
     def get_last_page_read(user_id: int, manga_id: str):

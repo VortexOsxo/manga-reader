@@ -8,7 +8,7 @@ class UsersDatabaseService:
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     username TEXT UNIQUE NOT NULL,
                     hashed_password TEXT NOT NULL
-                )'''
+                );'''
         with DatabaseService() as db_service:
             db_service.execute_query(query)
 
@@ -25,7 +25,7 @@ class UsersDatabaseService:
         
         with DatabaseService() as db_service:
             rows = db_service.select_query(query)
-        return [User(*u) for u in rows]
+        return [User(*user) for user in rows]
 
     @staticmethod
     def get_user_by_username(username: str) -> User:

@@ -1,5 +1,5 @@
 from .database_service import DatabaseService
-from ..mangas_service import MangasService
+from .mangas_database_service import MangasDatabaseService
 
 class FavoritesDatabaseService:
     @staticmethod
@@ -7,6 +7,7 @@ class FavoritesDatabaseService:
         query = '''CREATE TABLE IF NOT EXISTS favorites (
             user_id INTEGER NOT NULL,
             manga_id TEXT NOT NULL,
+            FOREIGN KEY (manga_id) REFERENCES mangas(id)
             FOREIGN KEY (user_id) REFERENCES users(id)
             PRIMARY KEY (user_id, manga_id)
         );'''
@@ -33,7 +34,7 @@ class FavoritesDatabaseService:
         values = (user_id,)
         with DatabaseService() as db_service:
             rows = db_service.select_query(query, values)
-        return [MangasService.get_manga_info(manga_id[0]) for manga_id in rows]
+        return [MangasDatabaseService.get_manga(manga_id[0]) for manga_id in rows]
 
     @staticmethod
     def is_favorite(user_id: int, manga_id: str) -> bool:

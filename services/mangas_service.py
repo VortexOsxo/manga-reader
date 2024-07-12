@@ -1,24 +1,7 @@
 import os
-from typing import List
-import json
 from config import DATA_PATH
 
 class MangasService:
-    @staticmethod
-    def getPreviews() -> List[dict]:
-        previews = []
-
-        for folder_name in os.listdir(DATA_PATH):
-            try: previews.append(MangasService.get_manga_info(folder_name))
-            except: continue
-
-        return previews
-    
-    @staticmethod
-    def getPreview(mangaId) -> dict:
-        try: return MangasService.get_manga_info(mangaId)
-        except: return None
-
     @staticmethod
     def getMiniaturePath(manga_id: str) -> str | None :
         if manga_id in os.listdir(DATA_PATH):
@@ -43,10 +26,3 @@ class MangasService:
         pages = os.listdir(pages_folder)
 
         return os.path.join(pages_folder, pages[page])
-
-    @staticmethod
-    def get_manga_info(manga_id) -> dict:
-        preview_json = open(os.path.join(DATA_PATH, manga_id, 'info'))
-        preview = json.load(preview_json)
-        preview['id'] = manga_id
-        return preview
