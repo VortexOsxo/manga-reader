@@ -3,7 +3,7 @@ from config import DATA_PATH
 
 class MangasService:
     @staticmethod
-    def getMiniaturePath(manga_id: str) -> str | None :
+    def getMiniaturePath(manga_id: str) -> str:
         if manga_id in os.listdir(DATA_PATH):
             return os.path.join(DATA_PATH, manga_id, 'miniature.png')
         return None
@@ -18,7 +18,7 @@ class MangasService:
         return chapters
 
     @staticmethod
-    def getPage(manga_id: str, chapter: int, page: int) -> str | None:
+    def getPage(manga_id: str, chapter: int, page: int) -> str:
         chapters_folder = os.path.join(DATA_PATH, str(manga_id), "chapters")
         chapters = os.listdir(chapters_folder)
 
