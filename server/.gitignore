@@ -2,9 +2,7 @@ __pycache__/
 
 instance/
 
-downloaders/
-
 .webassets-cache
 
 manga.db
-test.py
+venv
