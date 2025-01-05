@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="MangaReader.UserControls.ReaderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MangaReader.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             MouseWheel="Control_MouseWheel">
+
+    <Canvas x:Name="Canvas">
+        <Image x:Name="Next" Width="800" Stretch="UniformToFill"
+               Source="{Binding PagesService.NextPage}" 
+               Canvas.Top="{Binding NextPageTop}"
+               Canvas.Left="{Binding PageLeft}" />
+
+        <Image x:Name="CurrentImage" Width="800" Stretch="UniformToFill"
+               Source="{Binding PagesService.CurrentPage}"
+               Canvas.Top="{Binding CurrentPageTop}"
+               Canvas.Left="{Binding PageLeft}" />
+    </Canvas>
+
+</UserControl>
